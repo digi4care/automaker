@@ -326,7 +326,7 @@ export function KanbanCard({
               <div className="flex items-center gap-1 text-cyan-400">
                 <Cpu className="w-3 h-3" />
                 <span className="font-medium">
-                  {formatModelName(DEFAULT_MODEL)}
+                  {formatModelName(feature.model ?? DEFAULT_MODEL)}
                 </span>
               </div>
               {agentInfo.currentPhase && (

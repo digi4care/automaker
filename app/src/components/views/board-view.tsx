@@ -338,6 +338,9 @@ export function BoardView() {
           id: f.id || `feature-${index}-${Date.now()}`,
           status: f.status || "backlog",
           startedAt: f.startedAt, // Preserve startedAt timestamp
+          // Ensure model and thinkingLevel are set for backward compatibility
+          model: f.model || "opus",
+          thinkingLevel: f.thinkingLevel || "none",
         }));
         setFeatures(featuresWithIds);
       }

@@ -4,35 +4,45 @@
     "category": "Core",
     "description": "Can you add a shortcut key for O to open up a new project? To click on the open new project button that's in like the logo header area.",
     "steps": [],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765300273422-a8ovhdlwq",
     "category": "Core",
     "description": "I want the ability to press P which will automatically select my projects drop down and show all my projects. And then for each one, put a hotkey in the left that says 12345 and selecting one of those with my keyboard should automatically select that project.\n",
     "steps": [],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765301095506-cpy06q9u0",
     "category": "Core",
     "description": "It seems like there's only a limit of five of how many things show up in the project select drop down. I need to show everything.",
     "steps": [],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765301127030-a4nnqp0ja",
     "category": "Kanban",
     "description": "In creating new cards in Kanban, I need the ability to drag and drop images into the description section, which will attach the image as context in store in the temp directory, so that later on when the agent runs, it can know where to fetch that image from.",
     "steps": [],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765301184184-ttvhd8kkt",
     "category": "Core",
     "description": "-o should actually open the select folder prompt. Right now when you click o it goes to like the overview page. That's not the correct experience I'm looking for. Also just clicking on the top left open folder icon should do the same thing of opening the system prompt so they can select a project.",
     "steps": [],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765305181443-qze22t1hl",
@@ -43,14 +53,18 @@
       "open Setting view",
       "try to scroll "
     ],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765310151816-plx1pxl0z",
     "category": "Kanban",
     "description": "So i want to improve the look of the view of agent output modal its just plain text and im thinking to parse it better and kinda make it look like the last image of coolify logs nice colorded and somehow grouped into some types of info / debug so in our case like prompt / tool call etc",
     "steps": [],
-    "status": "verified"
+    "status": "verified",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765318148517-715isvwwb",
@@ -60,7 +74,9 @@
     "status": "verified",
     "startedAt": "2025-12-09T22:09:13.684Z",
     "imagePaths": [],
-    "skipTests": true
+    "skipTests": true,
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765319491258-x933j6kbq",
@@ -70,7 +86,9 @@
     "status": "verified",
     "startedAt": "2025-12-09T22:31:41.946Z",
     "imagePaths": [],
-    "skipTests": true
+    "skipTests": true,
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765321570899-oefrfast6",
@@ -87,14 +105,16 @@
     "startedAt": "2025-12-09T23:07:37.223Z",
     "imagePaths": [],
     "skipTests": false,
-    "summary": "Added model selection (Haiku/Sonnet/Opus) and thinking level (None/Low/Medium/High) controls to feature creation and edit dialogs. Modified: app-store.ts (added AgentModel and ThinkingLevel types), board-view.tsx (UI controls), feature-executor.js (dynamic model/thinking config), feature-loader.js (field persistence). Agent now executes with user-selected model and extended thinking settings."
+    "summary": "Added model selection (Haiku/Sonnet/Opus) and thinking level (None/Low/Medium/High) controls to feature creation and edit dialogs. Modified: app-store.ts (added AgentModel and ThinkingLevel types), board-view.tsx (UI controls), feature-executor.js (dynamic model/thinking config), feature-loader.js (field persistence). Agent now executes with user-selected model and extended thinking settings.",
+    "model": "opus",
+    "thinkingLevel": "none"
   },
   {
     "id": "feature-1765332414638-8jt9o8v06",
     "category": "Kanban",
     "description": "I want you to refactor the add new feature modal there are to many settings going on and its hard / annoyig to navigate lets split the settings in modal into tabs \nprompt icon - prompt and category\ngear icon - model and thinking ( here i would also like to split somehow the claude with thinking and codex that dont use it )\ntest icon - skip automated testing and verification steps\n",
     "steps": [],
-    "status": "waiting_approval",
+    "status": "verified",
     "startedAt": "2025-12-10T02:17:18.943Z",
     "imagePaths": [],
     "skipTests": true,
@@ -107,7 +127,7 @@
     "category": "Uncategorized",
     "description": "Make the add new feature modal widther ",
     "steps": [],
-    "status": "waiting_approval",
+    "status": "verified",
     "startedAt": "2025-12-10T02:25:21.328Z",
     "imagePaths": [
       {
@@ -123,22 +143,41 @@
     "thinkingLevel": "none"
   },
   {
-    "id": "feature-1765333578668-qbzk7xihs",
-    "category": "Uncategorized",
+    "id": "feature-1765334243840-qmnc0ez5o",
+    "category": "Core",
+    "description": "So we added support for codex cli models but when we select them on model tab its still trying to use claude model there is some race condition in the code\n\n1] [AutoMode] Running specific feature: feature-1765334118538-zc6n2ngu8\n[1] [AutoMode] Running feature: For example i got haiku model running or codex one but we can still see opus 4.5 check if it not hardcoded and fix it to use proper model name that was used in this task\n[1] [FeatureLoader] Created backup at /Users/shirone/Documents/Projekty/automaker/.automaker/feature_list.backup.json\n[1] [FeatureLoader] Updated feature feature-1765334118538-zc6n2ngu8: status=in_progress\n[1] [FeatureLoader] Successfully saved 13 features to feature_list.json\n[1] [FeatureExecutor] Implementing: For example i got haiku model running or codex one but we can still see opus 4.5 check if it not hardcoded and fix it to use proper model name that was used in this task\n[1] [FeatureExecutor] Phase: PLANNING for For example i got haiku model running or codex one but we can still see opus 4.5 check if it not hardcoded and fix it to use proper model name that was used in this task\n[1] [FeatureExecutor] getModelString: modelKey=gpt-5.1-codex, modelString=claude-opus-4-5-20251101\n[1] [FeatureExecutor] Using provider: Codex/OpenAI, model: claude-opus-4-5-20251101, thinking: none\n[1] [FeatureExecutor] Phase: ACTION for For example i got haiku model running or codex one but we can still see opus 4.5 check if it not hardcoded and fix it to use proper model name that was used in this task\n[1] [FeatureExecutor] ERROR: Codex provider selected but Claude model string detected: claude-opus-4-5-20251101\n[1] [FeatureExecutor] Feature model: gpt-5.1-codex, modelString: claude-opus-4-5-20251101\n[1] [FeatureExecutor] Error implementing feature: Error: Invalid model configuration: Codex provider cannot use Claude model 'claude-opus-4-5-20251101'. Please check feature model setting.\n[1]     at FeatureExecutor.implementFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/services/feature-executor.js:303:17)\n[1]     at async AutoModeService.runFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/auto-mode-service.js:142:22)\n[1]     at async /Users/shirone/Documents/Projekty/automaker/app/electron/main.js:421:12\n[1]     at async Session.<anonymous> (node:electron/js2c/browser_init:2:107280)\n[1] [FeatureExecutor] Error details: {\n[1]   message: \"Invalid model configuration: Codex provider cannot use Claude model 'claude-opus-4-5-20251101'. Please check feature model setting.\",\n[1]   stack: \"Error: Invalid model configuration: Codex provider cannot use Claude model 'claude-opus-4-5-20251101'. Please check feature model setting.\\n\" +\n[1]     '    at FeatureExecutor.implementFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/services/feature-executor.js:303:17)\\n' +\n[1]     '    at async AutoModeService.runFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/auto-mode-service.js:142:22)\\n' +\n[1]     '    at async /Users/shirone/Documents/Projekty/automaker/app/electron/main.js:421:12\\n' +\n[1]     '    at async Session.<anonymous> (node:electron/js2c/browser_init:2:107280)',\n[1]   name: 'Error',\n[1]   code: undefined,\n[1]   model: 'not initialized',\n[1]   provider: 'unknown',\n[1]   isCodex: 'unknown'\n[1] }\n[1] [AutoMode] Error running feature: Error: Invalid model configuration: Codex provider cannot use Claude model 'claude-opus-4-5-20251101'. Please check feature model setting.\n[1]     at FeatureExecutor.implementFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/services/feature-executor.js:303:17)\n[1]     at async AutoModeService.runFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/auto-mode-service.js:142:22)\n[1]     at async /Users/shirone/Documents/Projekty/automaker/app/electron/main.js:421:12\n[1]     at async Session.<anonymous> (node:electron/js2c/browser_init:2:107280)\n[1] [IPC] auto-mode:run-feature error: Error: Invalid model configuration: Codex provider cannot use Claude model 'claude-opus-4-5-20251101'. Please check feature model setting.\n[1]     at FeatureExecutor.implementFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/services/feature-executor.js:303:17)\n[1]     at async AutoModeService.runFeature (/Users/shirone/Documents/Projekty/automaker/app/electron/auto-mode-service.js:142:22)\n[1]     at async /Users/shirone/Documents/Projekty/automaker/app/electron/main.js:421:12\n[1]     at async Session.<anonymous> (node:electron/js2c/browser_init:2:107280)\n",
+    "steps": [],
+    "status": "waiting_approval",
+    "startedAt": "2025-12-10T02:37:26.038Z",
+    "imagePaths": [],
+    "skipTests": true,
+    "summary": "Fixed race condition in Codex model selection. Modified: feature-executor.js. The getModelString() method was incorrectly falling back to Claude opus model when Codex models were selected because it checked if modelString === modelKey (which is true for Codex). Fixed by checking isCodexModel() first and using the registry directly for Codex models. Also updated resumeFeatureWithContext() to properly use Codex provider when needed.",
+    "model": "opus",
+    "thinkingLevel": "ultrathink"
+  },
+  {
+    "id": "feature-1765334441225-h3j832sbz",
+    "category": "Kanban",
     "description": "For example i got haiku model running or codex one but we can still see opus 4.5 check if it not hardcoded and fix it to use proper model name that was used in this task",
     "steps": [],
-    "status": "in_progress",
-    "startedAt": "2025-12-10T02:26:22.286Z",
-    "imagePaths": [
-      {
-        "id": "img-1765333541510-3khezepr2",
-        "path": "/var/folders/lh/zcj91n9j4vj4_wg8jsvpqr9m0000gn/T/automaker-images/1765333541508_SCR-20251210-duzr.png",
-        "filename": "SCR-20251210-duzr.png",
-        "mimeType": "image/png"
-      }
-    ],
+    "status": "verified",
+    "startedAt": "2025-12-10T02:40:43.706Z",
+    "imagePaths": [],
     "skipTests": true,
+    "summary": "Kanban cards now render the agent info model badge using feature.model so the displayed model matches the one selected for the task.",
     "model": "gpt-5.1-codex",
+    "thinkingLevel": "none"
+  },
+  {
+    "id": "feature-1765334914401-nymc4sf8t",
+    "category": "Uncategorized",
+    "description": "Merge changes from main to our branch and resove merge conflicts ",
+    "steps": [],
+    "status": "backlog",
+    "startedAt": "2025-12-10T02:48:36.438Z",
+    "imagePaths": [],
+    "skipTests": true,
+    "model": "sonnet",
     "thinkingLevel": "none"
   }
 ]

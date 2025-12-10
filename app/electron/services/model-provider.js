@@ -206,6 +206,17 @@ class CodexProvider extends ModelProvider {
   async *executeQuery(options) {
     const codexExecutor = require('./codex-executor');
 
+    // Validate that we're not receiving a Claude model string
+    if (options.model && options.model.startsWith('claude-')) {
+      const errorMsg = `Codex provider cannot use Claude model '${options.model}'. Codex only supports OpenAI models (gpt-5.1-codex-max, gpt-5.1-codex, gpt-5.1-codex-mini, gpt-5.1).`;
+      console.error(`[CodexProvider] ${errorMsg}`);
+      yield {
+        type: 'error',
+        error: errorMsg
+      };
+      return;
+    }
+
     const executeOptions = {
       prompt: options.prompt,
       model: options.model,

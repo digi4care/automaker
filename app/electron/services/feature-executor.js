@@ -35,26 +35,38 @@ class FeatureExecutor {
   getModelString(feature) {
     const modelKey = feature.model || "opus"; // Default to opus
 
-    // Use the registry for model lookup
+    // First check if this is a Codex model - they use the model key directly as the string
+    if (ModelRegistry.isCodexModel(modelKey)) {
+      const model = ModelRegistry.getModel(modelKey);
+      if (model && model.modelString) {
+        console.log(`[FeatureExecutor] getModelString: modelKey=${modelKey}, modelString=${model.modelString} (Codex model)`);
+        return model.modelString;
+      }
+      // If model exists in registry but somehow no modelString, use the key itself
+      console.log(`[FeatureExecutor] getModelString: modelKey=${modelKey}, modelString=${modelKey} (Codex fallback)`);
+      return modelKey;
+    }
+
+    // For Claude models, use the registry lookup
     let modelString = ModelRegistry.getModelString(modelKey);
-    
-    // Fallback to MODEL_MAP if registry doesn't have it
-    if (!modelString || modelString === modelKey) {
+
+    // Fallback to MODEL_MAP if registry doesn't have it (legacy support)
+    if (!modelString) {
       modelString = MODEL_MAP[modelKey];
     }
-    
-    // Final fallback to opus
+
+    // Final fallback to opus for Claude models only
     if (!modelString) {
       modelString = MODEL_MAP.opus;
     }
-    
+
     // Validate model string format - ensure it's not incorrectly constructed
     // Prevent incorrect formats like "claude-haiku-4-20250514" (mixing haiku with sonnet date)
     if (modelString.includes('haiku') && modelString.includes('20250514')) {
       console.error(`[FeatureExecutor] Invalid model string detected: ${modelString}, using correct format`);
       modelString = MODEL_MAP.haiku || 'claude-haiku-4-5';
     }
-    
+
     console.log(`[FeatureExecutor] getModelString: modelKey=${modelKey}, modelString=${modelString}`);
     return modelString;
   }
@@ -186,6 +198,12 @@ class FeatureExecutor {
         projectPath
       );
 
+      // Ensure feature has a model set (for backward compatibility with old features)
+      if (!feature.model) {
+        console.warn(`[FeatureExecutor] Feature ${feature.id} missing model property, defaulting to 'opus'`);
+        feature.model = "opus";
+      }
+
       // Get model and thinking configuration from feature settings
       const modelString = this.getModelString(feature);
       const thinkingConfig = this.getThinkingConfig(feature);
@@ -288,7 +306,15 @@ class FeatureExecutor {
       let currentQuery;
       isCodex = this.isCodexModel(feature);
 
+      // Validate that model string matches the provider
       if (isCodex) {
+        // Ensure model string is actually a Codex model, not a Claude model
+        if (modelString.startsWith('claude-')) {
+          console.error(`[FeatureExecutor] ERROR: Codex provider selected but Claude model string detected: ${modelString}`);
+          console.error(`[FeatureExecutor] Feature model: ${feature.model || 'not set'}, modelString: ${modelString}`);
+          throw new Error(`Invalid model configuration: Codex provider cannot use Claude model '${modelString}'. Please check feature model setting.`);
+        }
+        
         // Use Codex provider for OpenAI models
         console.log(`[FeatureExecutor] Using Codex provider for model: ${modelString}`);
         const provider = this.getProvider(feature);
@@ -305,6 +331,11 @@ class FeatureExecutor {
           }
         });
       } else {
+        // Ensure model string is actually a Claude model, not a Codex model
+        if (!modelString.startsWith('claude-') && !modelString.match(/^(gpt-|o\d)/)) {
+          console.warn(`[FeatureExecutor] WARNING: Claude provider selected but unexpected model string: ${modelString}`);
+        }
+        
         // Use Claude SDK (original implementation)
         currentQuery = query({ prompt, options });
       }
@@ -521,6 +552,12 @@ class FeatureExecutor {
         projectPath
       );
 
+      // Ensure feature has a model set (for backward compatibility with old features)
+      if (!feature.model) {
+        console.warn(`[FeatureExecutor] Feature ${feature.id} missing model property, defaulting to 'opus'`);
+        feature.model = "opus";
+      }
+
       // Get model and thinking configuration from feature settings
       const modelString = this.getModelString(feature);
       const thinkingConfig = this.getThinkingConfig(feature);
@@ -549,7 +586,9 @@ class FeatureExecutor {
         });
       }
 
-      console.log(`[FeatureExecutor] Resuming with model: ${modelString}, thinking: ${feature.thinkingLevel || 'none'}`);
+      const isCodex = this.isCodexModel(feature);
+      const providerName = isCodex ? 'Codex/OpenAI' : 'Claude';
+      console.log(`[FeatureExecutor] Resuming with provider: ${providerName}, model: ${modelString}, thinking: ${feature.thinkingLevel || 'none'}`);
 
       const options = {
         model: modelString,
@@ -576,7 +615,33 @@ class FeatureExecutor {
       // Build prompt with previous context
       const prompt = promptBuilder.buildResumePrompt(feature, previousContext);
 
-      const currentQuery = query({ prompt, options });
+      // Use appropriate provider based on model type
+      let currentQuery;
+      if (isCodex) {
+        // Validate that model string is actually a Codex model
+        if (modelString.startsWith('claude-')) {
+          console.error(`[FeatureExecutor] ERROR: Codex provider selected but Claude model string detected: ${modelString}`);
+          throw new Error(`Invalid model configuration: Codex provider cannot use Claude model '${modelString}'. Please check feature model setting.`);
+        }
+
+        console.log(`[FeatureExecutor] Using Codex provider for resume with model: ${modelString}`);
+        const provider = this.getProvider(feature);
+        currentQuery = provider.executeQuery({
+          prompt,
+          model: modelString,
+          cwd: projectPath,
+          systemPrompt: promptBuilder.getVerificationPrompt(),
+          maxTurns: 20,
+          allowedTools: options.allowedTools,
+          abortController: abortController,
+          env: {
+            OPENAI_API_KEY: process.env.OPENAI_API_KEY
+          }
+        });
+      } else {
+        // Use Claude SDK
+        currentQuery = query({ prompt, options });
+      }
       execution.query = currentQuery;
 
       let responseText = "";
