@@ -24,6 +24,7 @@ services:
     environment:
       # Required
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ANTHROPIC_BASE_URL=http://172.17.0.1:13456
 
       # Optional - Claude CLI OAuth credentials
       - CLAUDE_OAUTH_CREDENTIALS=${CLAUDE_OAUTH_CREDENTIALS:-}
