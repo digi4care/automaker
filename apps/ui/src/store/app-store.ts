@@ -1158,6 +1158,14 @@ export const useAppStore = create<AppState & AppActions>()(
       },
 
       setCurrentProject: (project) => {
+        const currentProject = get().currentProject;
+
+        // Clear features when switching to a different project to prevent
+        // operations from using features from the previous project with wrong projectPath
+        if (currentProject?.id !== project?.id) {
+          set({ features: [] });
+        }
+
         set({ currentProject: project });
         if (project) {
           set({ currentView: 'board' });
